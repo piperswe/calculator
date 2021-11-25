@@ -1,11 +1,19 @@
 <script lang="ts">
-	import { Container } from 'sveltestrap';
+	import { Content, Header, HeaderNav, HeaderNavItem } from 'carbon-components-svelte';
+	import { page } from '$app/stores';
 	import '../app.scss';
 </script>
 
-<Container>
-	<h1>Piper's Calculators</h1>
-	<a href="/">&larr; back to home</a>
-	<hr />
+<Header company="Piper's" platformName="Calculators" href="/">
+	<HeaderNav>
+		<HeaderNavItem
+			href="/autoloan"
+			text="Auto Loan"
+			isSelected={$page.path.startsWith('/autoloan')}
+		/>
+	</HeaderNav>
+</Header>
+
+<Content>
 	<slot />
-</Container>
+</Content>

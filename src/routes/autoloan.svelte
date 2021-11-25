@@ -5,17 +5,23 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib/format';
 	import { aprToInterestRate } from '$lib/math';
-	import { parseMoney, parseNumber, parsePercent } from '$lib/parse';
+	import { parseMoney, parsePercent } from '$lib/parse';
 
-	import { Col, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
+	import { Column, Dropdown, Form, Grid, Row, TextInput, Tile } from 'carbon-components-svelte';
+
+	const terms = [12, 24, 36, 48, 60, 72, 84].map((months) => ({
+		id: months.toString(),
+		months,
+		text: `${months} months`
+	}));
 
 	let loanAmountInput = '20,000';
 	let aprInput = '3';
-	let termInput = '36';
+	let termInput = 2;
 
 	$: loanAmount = parseMoney(loanAmountInput);
 	$: apr = parsePercent(aprInput);
-	$: term = parseNumber(termInput);
+	$: term = terms[termInput].months;
 
 	$: monthlyInterestRate = aprToInterestRate(apr);
 
@@ -25,33 +31,44 @@
 	$: totalInterest = totalAmount - loanAmount;
 </script>
 
-<h1>Auto Loan Calculator</h1>
+<Grid>
+	<Row>
+		<Column>
+			<h1>Auto Loan Calculator</h1>
+			<div class="formspacer" />
 
-<Label for="loanAmount">Loan Amount</Label>
-<InputGroup>
-	<InputGroupText>$</InputGroupText>
-	<Input id="loanAmount" bind:value={loanAmountInput} />
-</InputGroup>
+			<Form>
+				<TextInput labelText="Loan Amount" bind:value={loanAmountInput} />
+				<div class="formspacer" />
+				<TextInput labelText="Interest Rate (APR, percent)" bind:value={aprInput} />
+				<div class="formspacer" />
+				<Dropdown titleText="Term" bind:selectedIndex={termInput} items={terms} />
+			</Form>
+		</Column>
+	</Row>
+	<Row>
+		<Column>
+			<div class="formspacer" />
+		</Column>
+	</Row>
+	<Row>
+		<Column>
+			<Tile>
+				Payment
+				<h2>{formatCurrency(payment)}/month</h2>
+			</Tile>
+		</Column>
+		<Column>
+			<Tile>
+				Total interest paid over the term of the loan
+				<h2>{formatCurrency(totalInterest)}</h2>
+			</Tile>
+		</Column>
+	</Row>
+</Grid>
 
-<Row>
-	<Col>
-		<Label for="apr">Interest Rate (APR)</Label>
-		<InputGroup>
-			<Input id="apr" bind:value={aprInput} />
-			<InputGroupText>%</InputGroupText>
-		</InputGroup>
-	</Col>
-
-	<Col>
-		<Label for="term">Term</Label>
-		<InputGroup>
-			<Input id="term" bind:value={termInput} />
-			<InputGroupText>months</InputGroupText>
-		</InputGroup>
-	</Col>
-</Row>
-
-<ul>
-	<li>Payment: {formatCurrency(payment)}/month</li>
-	<li>Total interest over term: {formatCurrency(totalInterest)}</li>
-</ul>
+<style>
+	.formspacer {
+		margin-bottom: 2rem;
+	}
+</style>
