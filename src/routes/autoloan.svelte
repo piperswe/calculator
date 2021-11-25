@@ -6,7 +6,6 @@
 	import { formatCurrency } from '$lib/format';
 	import Spacer from '$lib/Spacer.svelte';
 	import { aprToInterestRate } from '$lib/math';
-	import { parseMoney, parsePercent } from '$lib/parse';
 
 	import { Column, Dropdown, Form, Grid, Row, TextInput, Tile } from 'carbon-components-svelte';
 
@@ -16,12 +15,10 @@
 		text: `${months} months`
 	}));
 
-	let loanAmountInput = '20000';
-	let aprInput = '3';
+	let loanAmount = 20000;
+	let apr = 3;
 	let termInput = 2;
 
-	$: loanAmount = parseMoney(loanAmountInput);
-	$: apr = parsePercent(aprInput);
 	$: term = terms[termInput].months;
 
 	$: monthlyInterestRate = aprToInterestRate(apr);
@@ -39,9 +36,9 @@
 			<Spacer />
 
 			<Form>
-				<TextInput labelText="Loan Amount" type="number" bind:value={loanAmountInput} />
+				<TextInput labelText="Loan Amount" type="number" bind:value={loanAmount} />
 				<Spacer />
-				<TextInput labelText="Interest Rate (APR, percent)" type="number" bind:value={aprInput} />
+				<TextInput labelText="Interest Rate (APR, percent)" type="number" bind:value={apr} />
 				<Spacer />
 				<Dropdown titleText="Term" bind:selectedIndex={termInput} items={terms} />
 			</Form>
