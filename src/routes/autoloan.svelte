@@ -16,9 +16,10 @@
 	}));
 
 	let loanAmount = 20000;
-	let apr = 3;
+	let aprPercent = 3;
 	let termInput = 2;
 
+	$: apr = aprPercent / 100;
 	$: term = terms[termInput].months;
 
 	$: monthlyInterestRate = aprToInterestRate(apr);
@@ -38,7 +39,7 @@
 			<Form>
 				<TextInput labelText="Loan Amount" type="number" bind:value={loanAmount} />
 				<Spacer />
-				<TextInput labelText="Interest Rate (APR, percent)" type="number" bind:value={apr} />
+				<TextInput labelText="Interest Rate (APR, percent)" type="number" bind:value={aprPercent} />
 				<Spacer />
 				<Dropdown titleText="Term" bind:selectedIndex={termInput} items={terms} />
 			</Form>
