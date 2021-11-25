@@ -15,7 +15,7 @@
 		text: `${months} months`
 	}));
 
-	let loanAmountInput = '20,000';
+	let loanAmountInput = '20000';
 	let aprInput = '3';
 	let termInput = 2;
 
@@ -38,9 +38,9 @@
 			<div class="formspacer" />
 
 			<Form>
-				<TextInput labelText="Loan Amount" bind:value={loanAmountInput} />
+				<TextInput labelText="Loan Amount" type="number" bind:value={loanAmountInput} />
 				<div class="formspacer" />
-				<TextInput labelText="Interest Rate (APR, percent)" bind:value={aprInput} />
+				<TextInput labelText="Interest Rate (APR, percent)" type="number" bind:value={aprInput} />
 				<div class="formspacer" />
 				<Dropdown titleText="Term" bind:selectedIndex={termInput} items={terms} />
 			</Form>
