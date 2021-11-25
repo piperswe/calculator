@@ -4,6 +4,7 @@
 
 <script lang="ts">
 	import { formatCurrency } from '$lib/format';
+	import Spacer from '$lib/Spacer.svelte';
 	import { aprToInterestRate } from '$lib/math';
 	import { parseMoney, parsePercent } from '$lib/parse';
 
@@ -35,20 +36,20 @@
 	<Row>
 		<Column>
 			<h1>Auto Loan Calculator</h1>
-			<div class="formspacer" />
+			<Spacer />
 
 			<Form>
 				<TextInput labelText="Loan Amount" type="number" bind:value={loanAmountInput} />
-				<div class="formspacer" />
+				<Spacer />
 				<TextInput labelText="Interest Rate (APR, percent)" type="number" bind:value={aprInput} />
-				<div class="formspacer" />
+				<Spacer />
 				<Dropdown titleText="Term" bind:selectedIndex={termInput} items={terms} />
 			</Form>
 		</Column>
 	</Row>
 	<Row>
 		<Column>
-			<div class="formspacer" />
+			<Spacer />
 		</Column>
 	</Row>
 	<Row>
@@ -66,9 +67,3 @@
 		</Column>
 	</Row>
 </Grid>
-
-<style>
-	.formspacer {
-		margin-bottom: 2rem;
-	}
-</style>
