@@ -4,9 +4,7 @@
 
 <script lang="ts">
 	import { formatCurrency } from '$lib/format';
-
 	import { aprToInterestRate } from '$lib/math';
-
 	import { parseMoney, parseNumber, parsePercent } from '$lib/parse';
 
 	import { Col, Input, InputGroup, InputGroupText, Label, Row } from 'sveltestrap';
